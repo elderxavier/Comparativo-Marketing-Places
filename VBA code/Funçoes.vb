@@ -25,13 +25,16 @@ Function LineExist(Index As Integer, colCompara As Integer, Value, Limite As Lon
 Dim I As Long
     LineExist = False
     For I = 1 To Limite
-        If Sheets(Index).Cells(I, colCompara).Value = Value Then
+        'If Sheets(Index).Cells(I, colCompara).Value = Value Then
+        If CStr(UCase(Sheets(Index).Cells(I, colCompara).Value)) = CStr(UCase(Value)) Then
             LineExist = True
             Exit For
+            Exit Function
         End If
     Next I
     
 End Function
+
 '*****************************************************
 
 
@@ -81,7 +84,7 @@ Function exiteSkuPlanxPlan(sheetIndex_I As Integer, sheetIndex_II As Integer, co
         
     For I = 2 To Linha_1
     valor = Sheets(sheetIndex_I).Cells(I, colCompara).Value
-        If LineExist(sheetIndex_II, colCompara, valor, Linha_2) = False Then
+            
             For J = 2 To Linha
             Next J
             Linha = J
@@ -139,3 +142,4 @@ Function ComparaSkuCol(sheetIndex_I As Integer, sheetIndex_II As Integer, colSku
  Next I
  ComparaSkuCol = Sheets(newSheet).Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Row
 End Function
+

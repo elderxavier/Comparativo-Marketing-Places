@@ -10,6 +10,7 @@ Sub SkuDivergeDBToExtra()
 Dim SkupComp As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraEstoque
 Dim WorksheetName As String
 WorksheetName = "Nao cadastrados Magento"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -34,6 +35,7 @@ Sub SkuDivergeExtraToDB()
 Dim SkupComp As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraEstoque
 Dim WorksheetName As String
 WorksheetName = "Nao cadastrados Extra"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -58,6 +60,7 @@ Sub DivergeHabilitadosItoII()
 Dim SkupComp As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraEstoque
 Dim WorksheetName As String
 WorksheetName = "Divergente Habilitado"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -83,6 +86,7 @@ Sub DivergeQuantidadeItoII()
 Dim SkupComp As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraEstoque
 Dim WorksheetName As String
 WorksheetName = "Divergente Quantidade"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -111,7 +115,8 @@ Dim cont2 As Long
 Dim I As Long
 Dim div As Long
 'Function LineExist(Index As Integer, colCompara As Integer, Value, Limite As Long) As Boolean
-Limite = Sheets(2).Cells(Rows.Count, 3).End(xlUp).Offset(1, 0).Row
+If Sheets(2).Cells(1, 4).Value <> "OK" Then
+    Limite = Sheets(2).Cells(Rows.Count, 3).End(xlUp).Offset(1, 0).Row
     cont1 = 0
     cont2 = 0
     'div = Sheets(2).Cells(2, 2).Value / 10000
@@ -133,7 +138,8 @@ Limite = Sheets(2).Cells(Rows.Count, 3).End(xlUp).Offset(1, 0).Row
     Next I
     'MsgBox ("Habilitados: " & cont1 & " \nDesabilitados: " & cont2)
     Sheets(2).Activate
-    MsgBox ("Dados Atualizados com sucesso")
+    Sheets(2).Cells(1, 4).Value = "OK"
+    End If
     
 End Sub
 
@@ -153,8 +159,9 @@ Dim cont1 As Long
 Dim cont2 As Long
 Dim I As Long
 Dim div As Double
-'Function LineExist(Index As Integer, colCompara As Integer, Value, Limite As Long) As Boolean
-Limite = Sheets(4).Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Row
+If Sheets(4).Cells(1, 4).Value <> "OK" Then
+    'Function LineExist(Index As Integer, colCompara As Integer, Value, Limite As Long) As Boolean
+    Limite = Sheets(4).Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Row
     cont1 = 0
     cont2 = 0
     For I = 2 To Limite
@@ -163,24 +170,32 @@ Limite = Sheets(4).Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Row
             Sheets(4).Cells(I, 3).Value = Sheets(4).Cells(I, 2).Value
         End If
         If Sheets(4).Cells(I, 2).Value > 0 Then
-        div = CDbl(Sheets(4).Cells(I, 2).Value) / 10000
+            div = CDbl(Sheets(4).Cells(I, 2).Value) / 10000
+              div = FormatNumber(div, 2)
            Sheets(4).Cells(I, 2).Value = div
+           Sheets(4).Cells(I, 2).NumberFormat = "#0.00"
         Else
             div = CDbl(Sheets(4).Cells(I, 2).Value) * 1
             Sheets(4).Cells(I, 2).Value = div
+            Sheets(4).Cells(I, 2).NumberFormat = "#0.00"
         End If
         ' Coluna price
         If Sheets(4).Cells(I, 3).Value > 0 Then
         div = CDbl(Sheets(4).Cells(I, 3).Value) / 10000
+            div = FormatNumber(div, 2)
+            
            Sheets(4).Cells(I, 3).Value = div
+           Sheets(4).Cells(I, 3).NumberFormat = "#0.00"
         Else
             div = CDbl(Sheets(4).Cells(I, 3).Value) * 1
             Sheets(4).Cells(I, 3).Value = div
+            Sheets(4).Cells(I, 3).NumberFormat = "#0.00"
         End If
         
     Next I
-    Sheets(4).Activate
-    MsgBox ("Dados Atualizados com sucesso")
+    Sheets(4).Cells(1, 4).Value = "OK"
+    'Sheets(4).Activate
+End If
     
 End Sub
 '*****************************************************
@@ -194,6 +209,7 @@ Sub DivergePrecoIToII()
 Dim SkupComp As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraPreco
 Dim WorksheetName As String
 WorksheetName = "Divergente Precos"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -220,6 +236,7 @@ Dim SkupComp As Long
 'ComparaSkuCol(sheetIndex_I As Integer, sheetIndex_II As Integer, colSku As Integer, colCompara As Integer, colIni As Integer, colEnd As Integer, sheetTitle As String) As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraPreco
 Dim WorksheetName As String
 WorksheetName = "Divergente Promocao"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -245,6 +262,7 @@ Sub SkuDivergeDBToExtraPreco()
 Dim SkupComp As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraPreco
 Dim WorksheetName As String
 WorksheetName = "Nao cadastrados Magento P"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -270,6 +288,7 @@ Sub SkuDivergeExtraToDBPreco()
 Dim SkupComp As Long
 Dim Limite As Long
 Dim I As Long
+Call PartnerExtraPreco
 Dim WorksheetName As String
 WorksheetName = "Nao cadastrados Extra P"
 If WorksheetExiststo(WorksheetName) <> 0 Then
@@ -286,3 +305,6 @@ MsgBox ("Existem " & SkupComp - 1 & "  Produtos com cadstro divergente")
 Sheets(WorksheetName).Activate
 End Sub
 '*****************************************************
+
+
+
